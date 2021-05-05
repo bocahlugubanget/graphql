@@ -1,53 +1,88 @@
-test_with_go_modules: &test_with_go_modules
-  steps:
-    - checkout
-    - run: go test ./...
-    - run: go vet ./...
-
-test_without_go_modules: &test_without_go_modules
-  working_directory: /go/src/github.com/graphql-go/graphql
-  steps:
-    - checkout
-    - run: go get -v -t -d ./...
-    - run: go test ./...
-    - run: go vet ./...
-
-defaults: &defaults
-  <<: *test_with_go_modules
-
 version: 2
-jobs:
-  golang:1.8.7:
-    <<: *test_without_go_modules
-    docker:
-      - image: circleci/golang:1.8.7
-  golang:1.9.7:
-    <<: *test_without_go_modules
-    docker:
-      - image: circleci/golang:1.9.7
-  golang:1.11:
-    <<: *defaults
-    docker:
-      - image: circleci/golang:1.11
-  golang:latest:
-    <<: *defaults
-    docker:
-      - image: circleci/golang:latest
-  coveralls:
-    docker:
-      - image: circleci/golang:latest
+jobs: # we now have TWO jobs, so that a workflow can coordinate them!
+  one: # This is our first job.
+    docker: # it uses the docker executor
+      - image: circleci/clojure:lein-2.9.5
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    # Steps are a list of commands to run inside the docker container above.
+    steps:
+      - checkout # this pulls code down from GitHub
+      - run: echo "A first hello" # This prints "A first hello" to stdout.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+  two: # This is our second job.
+    docker: # it runs inside a docker image, the same as above.
+      - image: circleci/clojure:lein-2.9.5
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      - run: go get github.com/mattn/goveralls
-      - run: go test -v -cover -race -coverprofile=coverage.out
-      - run: /go/bin/goveralls -coverprofile=coverage.out -service=circle-ci -repotoken $COVERALLS_TOKEN
-
+      - run: echo "A more familiar hi" # We run a similar echo command to above.
+      - run: sleep 15 # and then sleep for 15 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+      - run: sleep 590 # a command telling the job to "sleep" for 25 seconds.
+# Under the workflows: map, we can coordinate our two jobs, defined above.
 workflows:
   version: 2
-  build:
-    jobs:
-      - golang:1.8.7
-      - golang:1.9.7
-      - golang:1.11
-      - golang:latest
-      - coveralls
+  one_and_two: # this is the name of our workflow
+    jobs: # and here we list the jobs we are going to run.
+      - one
+      - two
